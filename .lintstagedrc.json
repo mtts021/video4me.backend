@@ -1,5 +1,5 @@
 {
-  "*.{js,ts}": [
+  "{test, src}/**/*.{js,ts}": [
     "eslint --fix",
     "jest --passWithNoTests"
   ]
