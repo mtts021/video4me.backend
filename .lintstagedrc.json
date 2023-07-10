@@ -1,6 +1,6 @@
 {
-  "{test, src}/**/*.{js,ts}": [
+  "*.ts": [
     "eslint --fix",
-    "jest --passWithNoTests"
+    "npm run test:staged"
   ]
 }
