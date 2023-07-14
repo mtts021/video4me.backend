@@ -42,20 +42,13 @@ jobs:
           fi
 
       - name: Install commitlint
-        run: npm install --global @commitlint/cli
+        run: npm install --global @commitlint/cli @commitlint/config-conventional
 
-      - name: Configure commitlint
-        run: |
-          echo "module.exports =" > commitlint.config.js
-          echo "{ extends: ['@commitlint/config-conventional'] };" >> commitlint.config.js
-
-      - name: Fetch PR commits
+      - name: Lint commits
         run: |
           git fetch origin pull/${{ github.event.pull_request.number }}/merge
           git checkout FETCH_HEAD
-
-      - name: Lint commits
-        run: npx commitlint --edit $1
+          npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
 
       - name: Check commit linting errors
         run: |
