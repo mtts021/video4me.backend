@@ -48,7 +48,7 @@ jobs:
         run: |
           git fetch origin pull/${{ github.event.pull_request.number }}/merge
           git checkout FETCH_HEAD
-          npx commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
+          npx commitlint --from=$GITHUB_SHA
 
       - name: Check commit linting errors
         run: |
