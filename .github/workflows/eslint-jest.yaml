@@ -55,7 +55,7 @@ jobs:
           git checkout FETCH_HEAD
 
       - name: Lint commits
-        run: npx commitlint
+        run: npx commitlint --edit $1
 
       - name: Check commit linting errors
         run: |
