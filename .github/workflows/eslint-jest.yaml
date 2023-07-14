@@ -1,4 +1,4 @@
-name: ESLint and Jest
+name: ESLint, Jest, and Commit Linter
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  eslint-jest:
+  eslint-jest-commitlint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -27,11 +27,9 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
-        continue-on-error: true
 
       - name: Run Jest
         run: npm test
-        continue-on-error: true
 
       - name: Check for ESLint and Jest errors
         run: |
@@ -40,5 +38,30 @@ jobs:
 
           if [ $eslint_exit_code -ne 0 ] || [ $jest_exit_code -ne 0 ]; then
             echo "ESLint or Jest found errors. Blocking the pull request."
+            exit 1
+          fi
+
+      - name: Install commitlint
+        run: npm install --global @commitlint/cli
+
+      - name: Configure commitlint
+        run: |
+          echo "module.exports =" > commitlint.config.js
+          echo "{ extends: ['@commitlint/config-conventional'] };" >> commitlint.config.js
+
+      - name: Fetch PR commits
+        run: |
+          git fetch origin pull/${{ github.event.pull_request.number }}/merge
+          git checkout FETCH_HEAD
+
+      - name: Lint commits
+        run: npx commitlint
+
+      - name: Check commit linting errors
+        run: |
+          commitlint_exit_code=$?
+
+          if [ $commitlint_exit_code -ne 0 ]; then
+            echo "Commit linter found errors. Blocking the pull request."
             exit 1
           fi
