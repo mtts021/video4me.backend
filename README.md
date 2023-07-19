@@ -12,4 +12,4 @@ Por enquanto o projeto está configurado apenas para rodar localmente, em breve 
 
 ## O que é o mongo-express?
 
-O mongo-express é uma interface visual do mongodb que funciona dentro do seu navegador, após o `docker compose up`, ele funcionará na porta `:8081`.
+O mongo-express é uma interface visual do mongodb que funciona dentro do seu navegador, após o `docker compose up -d --build`, ele funcionará na porta `:8081`.
