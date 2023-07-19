@@ -4,7 +4,7 @@ Uma plataforma de agregação e ordenação de vídeos de outras plataformas
 
 ## Como inicializar o projeto
 
-Com o `docker compose up` o mongodb, mongo-express e API é inicializada.
+Com o `docker compose up -d --build` o mongodb, mongo-express e API é inicializada.
 
 Sem o docker também é possível inicializar o projeto, mas terá que instalar o mongodb no seu computador e rodar o projeto localmente com `npm run start:dev`
 
