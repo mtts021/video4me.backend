@@ -14,8 +14,6 @@ services:
 
   mongodb:
     image: mongo
-    profiles:
-      - dev
     ports:
       - 27017:27017
     environment:
@@ -26,8 +24,6 @@ services:
 
   mongo-express:
     image: mongo-express
-    profiles:
-      - dev
     ports:
       - '8081:8081'
     environment:
