@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { v4 as uuidv4 } from 'uuid'
-import { User } from './classes/user.class'
+import { User } from './interfaces/user.interface'
+import { UserResponse } from './interfaces/userResponse.interface'
 import { encodePassword } from './utils/bcrypt'
 
 @Injectable()
@@ -22,7 +23,16 @@ export class UsersService {
         password: encodedPassword,
       },
     )
-    return createdUser.save()
+    createdUser.save()
+
+    const returnUser: UserResponse = {
+      uuid: createdUser.uuid,
+      name: createdUser.name,
+      email: createdUser.email,
+      createdAt: createdUser.createdAt,
+    }
+
+    return returnUser
   }
 
   findOne(id: number) {

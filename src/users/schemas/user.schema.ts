@@ -5,10 +5,7 @@ export const UserSchema = new mongoose.Schema(
     uuid: String,
     name: String,
     email: String,
-    password: {
-      type: String,
-      select: false,
-    },
+    password: String,
     createdAt: Date,
     updatedAt: Date,
   },

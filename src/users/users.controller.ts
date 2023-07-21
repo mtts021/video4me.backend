@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Patch, Param, Delete, Body } from '@nestjs/common'
-import { User } from './classes/user.class'
+import { User } from './interfaces/user.interface'
+import { UserResponse } from './interfaces/userResponse.interface'
 import { UsersService } from './users.service'
 
 @Controller('users')
@@ -9,7 +10,7 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() user: User): Promise<User> {
+  create(@Body() user: User): Promise<UserResponse> {
     return this.usersService.create(user)
   }
 
