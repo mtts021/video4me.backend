@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { v4 as uuidv4 } from 'uuid'
 import { User } from './classes/user.class'
+import { encodePassword } from './utils/bcrypt'
 
 @Injectable()
 export class UsersService {
@@ -10,13 +11,17 @@ export class UsersService {
     console.log('UsersService constructor')
   }
 
-  create(user: User) {
-    const createdUser = new this.UserModel({
-      uuid: uuidv4(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      ...user,
-    })
+  async create(user: User) {
+    const encodedPassword = await encodePassword(user.password)
+    const createdUser = new this.UserModel(
+      {
+        uuid: uuidv4(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        ...user,
+        password: encodedPassword,
+      },
+    )
     return createdUser.save()
   }
 
