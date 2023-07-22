@@ -5,9 +5,7 @@ import { UsersService } from './users.service'
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {
-    console.log('UsersController constructor')
-  }
+  constructor(private readonly usersService: UsersService) {}
 
   @Post()
   create(@Body() user: User): Promise<UserResponse> {

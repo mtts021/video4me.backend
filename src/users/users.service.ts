@@ -8,9 +8,7 @@ import { encodePassword } from './utils/bcrypt'
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel('Users') private readonly UserModel: Model<User>) {
-    console.log('UsersService constructor')
-  }
+  constructor(@InjectModel('Users') private readonly UserModel: Model<User>) {}
 
   async create(user: User) {
     const encodedPassword = await encodePassword(user.password)
