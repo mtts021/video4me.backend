@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Patch, Param, Delete, Body } from '@nestjs/common'
 import { User } from './interfaces/user.interface'
-import { UserResponse } from './interfaces/userResponse.interface'
+import { UserReturn } from './interfaces/userReturn.interface'
 import { UsersService } from './users.service'
 
 @Controller('users')
@@ -8,7 +8,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() user: User): Promise<UserResponse> {
+  create(@Body() user: User): Promise<UserReturn> {
     return this.usersService.create(user)
   }
 
@@ -18,9 +18,9 @@ export class UsersController {
   }
 
   @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update(+id, updateUserDto)
-  // }
+  update(@Param('id') id: string, @Body() user: User) {
+    return this.usersService.update(+id, user)
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

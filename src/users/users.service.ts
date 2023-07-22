@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { v4 as uuidv4 } from 'uuid'
 import { User } from './interfaces/user.interface'
-import { UserResponse } from './interfaces/userResponse.interface'
+import { UserReturn } from './interfaces/userReturn.interface'
 import { encodePassword } from './utils/bcrypt'
 
 @Injectable()
@@ -23,7 +23,7 @@ export class UsersService {
     )
     createdUser.save()
 
-    const returnUser: UserResponse = {
+    const returnUser: UserReturn = {
       uuid: createdUser.uuid,
       name: createdUser.name,
       email: createdUser.email,
@@ -37,9 +37,9 @@ export class UsersService {
     return `This action returns a #${id} user`
   }
 
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`
-  // }
+  update(id: number, user: User) {
+    return `This action updates a #${user.id} user`
+  }
 
   remove(id: number) {
     return `This action removes a #${id} user`
