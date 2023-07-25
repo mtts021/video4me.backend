@@ -2,15 +2,16 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { v4 as uuidv4 } from 'uuid'
-import { User } from './interfaces/user.interface'
-import { UserReturn } from './interfaces/userReturn.interface'
+import { CreateUserDTO } from './dtos/create-user.dto'
+import { UserReturn } from './interfaces/user-return.interface'
+import { User } from './schemas/user.schema'
 import { encodePassword } from './utils/bcrypt'
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel('Users') private readonly UserModel: Model<User>) {}
 
-  async create(user: User) {
+  async create(user: CreateUserDTO): Promise<UserReturn> {
     const encodedPassword = await encodePassword(user.password)
     const createdUser = new this.UserModel(
       {
@@ -37,8 +38,8 @@ export class UsersService {
     return `This action returns a #${id} user`
   }
 
-  update(id: number, user: User) {
-    return `This action updates a #${user.id} user`
+  update(uuid: string, user: User) {
+    return `This action updates a #${user.uuid} user`
   }
 
   remove(id: number) {

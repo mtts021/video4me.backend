@@ -1,6 +1,6 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common'
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { CreateUserMiddleware } from './middlewares/user.middleware'
+import { CreateUserMiddleware } from './middlewares/unique-email.middleware'
 import { UserSchema } from './schemas/user.schema'
 import { UsersController } from './users.controller'
 import { UsersService } from './users.service'
@@ -11,7 +11,7 @@ import { UsersService } from './users.service'
   providers: [UsersService],
 })
 
-export class UsersModule implements NestModule {
+export class UsersModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(CreateUserMiddleware)
